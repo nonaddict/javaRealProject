@@ -147,6 +147,11 @@ public class LogIn extends AppCompatActivity {
                                 String recipientEmail = user.getString("email");
                                 String password = user.getString("password");
 
+                                if(recipientEmail.isEmpty()){
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(LogIn.this, "you did'nt sign up with an email", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
 
                                 String senderEmail = "jossefkisch@test-zxk54v883kzljy6v.mlsender.net";
                                 String senderName = "Retro ping pong";
@@ -214,7 +219,23 @@ public class LogIn extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(LogIn.this, "Error occurred while fetching user data", Toast.LENGTH_SHORT).show();
+                            String message = "An error occurred";
+
+                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                                try {
+                                    String jsonStr = new String(error.networkResponse.data, "UTF-8");
+                                    JSONObject json = new JSONObject(jsonStr);
+
+                                    if (json.has("message")) {
+                                        message = json.getString("message");
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    message = "Error";
+                                }
+                            }
+                            Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
                         }
                     }
             );

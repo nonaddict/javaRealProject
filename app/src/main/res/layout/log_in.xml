@@ -70,10 +70,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:onClick="signUp"
         android:id="@+id/button4"
         android:layout_width="104dp"
         android:layout_height="49dp"
+        android:backgroundTint="#9B9292"
+        android:onClick="signUp"
         android:text="sign up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,21 +111,21 @@
         app:layout_constraintVertical_bias="0.256" />
 
     <TextView
-        android:onClick="sendNewCode"
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:onClick="sendNewCode"
         android:text="Forgot password?"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
-        android:clickable="true"
-        android:layout_marginTop="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintHorizontal_bias="0.744"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintVertical_bias="0.755" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

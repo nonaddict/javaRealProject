@@ -62,6 +62,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#9B9292"
         android:onClick="logIn"
         android:text="log in"
         app:layout_constraintBottom_toBottomOf="parent"
