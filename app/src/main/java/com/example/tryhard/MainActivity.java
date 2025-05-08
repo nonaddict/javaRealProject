@@ -58,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
     // Handle user sign-up when new user button is clicked
     public void newUser(View view) {
         // Get input fields for username and password
+        EditText emailEditText=findViewById(R.id.editTextTextEmailAddress);
         EditText usernameEditText = findViewById(R.id.editTextText);
         EditText passwordEditText = findViewById(R.id.editTextTextPassword);
         ProgressBar progressBar=findViewById(R.id.progressBar);
 
-        // Extract text and remove any leading/trailing spaces
+        String email=emailEditText.getText().toString().trim();
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         progressBar.setVisibility( View.VISIBLE);
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Create a JSON object to send in the request body for sign-up
         JSONObject requestBody = new JSONObject();
         try {
+            requestBody.put("email",email);
             requestBody.put("username", username);
             requestBody.put("password", password);
             requestBody.put("score", 0);
@@ -109,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                                // Clear any previous username if exists
+
                                 editor.remove("username");
 
                                 // Save the new username
                                 editor.putString("username", username);
-                                editor.apply();  // Apply the changes
+                                editor.apply();
                                 // Move to the GameView activity
                                 Intent intent = new Intent(MainActivity.this, GameView.class);
                                 startActivity(intent);
