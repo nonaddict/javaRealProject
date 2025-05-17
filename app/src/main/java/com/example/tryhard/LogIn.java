@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -35,18 +36,18 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
 
-        // Initialize the EditText views after setting the content view
+
         usernameEditText = findViewById(R.id.editTextText2);
         passwordEditText = findViewById(R.id.editTextTextPassword2);
     }
 
-    // Handle user login
+
     public void check(View view) {
-        // Get input fields from UI
+
 
         progressBar = findViewById(R.id.progressBar2);
 
-        // Show the progress bar
+
         progressBar.setVisibility(View.VISIBLE);
 
         String username = usernameEditText.getText().toString().trim();
@@ -59,7 +60,7 @@ public class LogIn extends AppCompatActivity {
             return;
         }
 
-        // Create JSON body
+
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("username", username);
@@ -71,7 +72,7 @@ public class LogIn extends AppCompatActivity {
             return;
         }
 
-        // Volley setup
+
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://auth-api-dsp0.onrender.com/login";
 

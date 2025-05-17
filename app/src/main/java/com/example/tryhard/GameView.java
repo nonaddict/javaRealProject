@@ -25,20 +25,20 @@ import java.util.ArrayList;
 
 
 public class GameView extends AppCompatActivity {
-    Game game; // Game instance
+    Game game;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_view);
 
-        // Retrieve username from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
-        String username = sharedPreferences.getString("username", "");  // Default to "" if not found
 
-        // Get points from intent
+        SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+
+
         int points = getIntent().getIntExtra("points", 0);
-        //if there is username in sharedPreferences
+
         if (!username.isEmpty()) {
             RequestQueue queue = Volley.newRequestQueue(this);
             String url = "https://auth-api-dsp0.onrender.com/user/" + username;
@@ -56,7 +56,6 @@ public class GameView extends AppCompatActivity {
                                     int currentScore = user.getInt("score");
 
                                     if (points > currentScore) {
-                                        // Only update if it's a new record
                                         String updateUrl = "https://auth-api-dsp0.onrender.com/updateScore";
 
                                         JSONObject updateBody = new JSONObject();
@@ -108,11 +107,11 @@ public class GameView extends AppCompatActivity {
             game = new Game(this);
         }
 
-        // Replace the current activity's layout with the game view
-        setContentView(game); // The game view will take over the screen
+
+        setContentView(game);
     }
 
-    // Fetch leaderboard after updating score
+
     public void fetchLeaderboard() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://auth-api-dsp0.onrender.com/getScores";
@@ -128,7 +127,7 @@ public class GameView extends AppCompatActivity {
                             if (response.getBoolean("success")) {
                                 JSONArray usersArray = response.getJSONArray("users");
 
-                                // Sort users based on their scores
+
                                 ArrayList<User> users= new ArrayList<User>();
                                 for (int i = 0; i < usersArray.length(); i++) {
                                     JSONObject userObj = usersArray.getJSONObject(i);
@@ -136,11 +135,10 @@ public class GameView extends AppCompatActivity {
                                     int score = userObj.getInt("score");
                                     users.add(new User(username,score));
                                 }
-                                // Bubble Sort (descending order by score)
+
                                 for (int i = 0; i < users.size() - 1; i++) {
                                     for (int j = 0; j < users.size() - i - 1; j++) {
                                         if (users.get(j).getScore() < users.get(j + 1).getScore()) {
-                                            // Swap
                                             User temp = users.get(j);
                                             users.set(j, users.get(j + 1));
                                             users.set(j + 1, temp);
@@ -148,7 +146,6 @@ public class GameView extends AppCompatActivity {
                                     }
                                 }
 
-                                // Build the leaderboard string with ranks
                                 StringBuilder leaderboard = new StringBuilder();
                                 for (int i = 0; i < users.size(); i++) {
                                     User user = users.get(i);
@@ -159,7 +156,7 @@ public class GameView extends AppCompatActivity {
                                             .append("\n");
                                 }
 
-                                // Display the leaderboard
+
                                 TextView leaderboardTextView = findViewById(R.id.textView8);
                                 leaderboardTextView.setText("Leader Board\n\n"+leaderboard.toString());
                             }

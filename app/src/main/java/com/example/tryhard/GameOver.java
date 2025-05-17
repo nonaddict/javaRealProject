@@ -14,15 +14,14 @@ public class GameOver extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over);
 
-        // Get points from the Intent
-        int points = getIntent().getIntExtra("points", 0);  // Default value is 0 if points are not passed
+        int points = getIntent().getIntExtra("points", 0);
 
-        // Display the points
+
         TextView pointsTextView = findViewById(R.id.textView7);
         pointsTextView.setText("Score: " + points);
     }
 
-    // Restart the game when the button is clicked
+
     public void restartGame(View view) {
 
         int points = getIntent().getIntExtra("points", 0);
