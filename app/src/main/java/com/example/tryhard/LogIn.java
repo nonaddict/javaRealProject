@@ -162,12 +162,12 @@ public class LogIn extends AppCompatActivity {
 
                                 JSONObject emailData = new JSONObject();
                                 emailData.put("from", new JSONObject().put("email", senderEmail).put("name", senderName));
-                                emailData.put("to", new JSONArray().put(new JSONObject().put("email", recipientEmail).put("name", user.toString())));
+                                emailData.put("to", new JSONArray().put(new JSONObject().put("email", recipientEmail).put("name",username)));
                                 emailData.put("subject", subject);
                                 emailData.put("text", textContent);
                                 emailData.put("html", htmlContent);
 
-                                String apiKey = "mlsn.7f12b5c3535e681445799556504d444a8aba1cf9a20604780e674661cc92d8a7";
+                                String apiKey = "mlsn.f7ea2d4f3405a7cc6f7b8bf6e1114b6cdd438941622a34e17b975e33c487f550";
                                 String emailApiUrl = "https://api.mailersend.com/v1/email";
 
                                 JsonObjectRequest emailRequest = new JsonObjectRequest(
