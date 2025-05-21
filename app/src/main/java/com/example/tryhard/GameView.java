@@ -41,7 +41,7 @@ public class GameView extends AppCompatActivity {
 
         if (!username.isEmpty()) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://auth-api-dsp0.onrender.com/user/" + username;
+            String url = "https://auth-api-production-f8df.up.railway.app/user/" + username;
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.GET,
@@ -56,7 +56,7 @@ public class GameView extends AppCompatActivity {
                                     int currentScore = user.getInt("score");
 
                                     if (points > currentScore) {
-                                        String updateUrl = "https://auth-api-dsp0.onrender.com/updateScore";
+                                        String updateUrl = "https://auth-api-production-f8df.up.railway.app/updateScore";
 
                                         JSONObject updateBody = new JSONObject();
                                         updateBody.put("username", username);
@@ -114,7 +114,7 @@ public class GameView extends AppCompatActivity {
 
     public void fetchLeaderboard() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://auth-api-dsp0.onrender.com/getScores";
+        String url = "https://auth-api-production-f8df.up.railway.app/getScores";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,

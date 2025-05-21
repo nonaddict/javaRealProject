@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://auth-api-dsp0.onrender.com/signup";
+        String url = "https://auth-api-production-f8df.up.railway.app/signup";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,

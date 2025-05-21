@@ -74,7 +74,7 @@ public class LogIn extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://auth-api-dsp0.onrender.com/login";
+        String url = "https://auth-api-production-f8df.up.railway.app/login";
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
@@ -133,7 +133,7 @@ public class LogIn extends AppCompatActivity {
 
             RequestQueue queue = Volley.newRequestQueue(this);
             String username = usernameEditText.getText().toString().trim();
-            String url = "https://auth-api-dsp0.onrender.com/user/" + username;
+            String url = "https://auth-api-production-f8df.up.railway.app/user/" + username;
 
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.GET,
@@ -162,7 +162,7 @@ public class LogIn extends AppCompatActivity {
 
                                 JSONObject emailData = new JSONObject();
                                 emailData.put("from", new JSONObject().put("email", senderEmail).put("name", senderName));
-                                emailData.put("to", new JSONArray().put(new JSONObject().put("email", recipientEmail).put("name", "John Mailer")));
+                                emailData.put("to", new JSONArray().put(new JSONObject().put("email", recipientEmail).put("name", user.toString())));
                                 emailData.put("subject", subject);
                                 emailData.put("text", textContent);
                                 emailData.put("html", htmlContent);
