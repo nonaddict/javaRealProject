@@ -4,6 +4,9 @@ package com.example.tryhard;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +29,17 @@ import java.util.ArrayList;
 
 public class GameView extends AppCompatActivity {
     Game game;
+    ImageButton button;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_view);
-
+        button = findViewById(R.id.imageButton);
+        progressBar=findViewById(R.id.progressBar3);
+        progressBar.setVisibility(View.VISIBLE);
+        button.setVisibility(View.GONE);
 
         SharedPreferences sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
@@ -76,6 +84,8 @@ public class GameView extends AppCompatActivity {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(GameView.this, "Failed to display the scores", Toast.LENGTH_SHORT).show();
+                                                        progressBar.setVisibility(View.GONE);
+                                                        button.setVisibility(View.VISIBLE);
                                                     }
                                                 }
                                         );
@@ -94,6 +104,8 @@ public class GameView extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Toast.makeText(GameView.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            button.setVisibility(View.VISIBLE);
                         }
                     }
             );
@@ -124,6 +136,8 @@ public class GameView extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            progressBar.setVisibility(View.GONE);
+                            button.setVisibility(View.VISIBLE);
                             if (response.getBoolean("success")) {
                                 JSONArray usersArray = response.getJSONArray("users");
 
@@ -162,6 +176,8 @@ public class GameView extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            progressBar.setVisibility(View.GONE);
+                            button.setVisibility(View.VISIBLE);
                         }
                     }
                 },
@@ -169,6 +185,8 @@ public class GameView extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(GameView.this, "Error fetching leaderboard", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        button.setVisibility(View.VISIBLE);
                     }
                 }
         );
