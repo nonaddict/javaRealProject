@@ -12,10 +12,12 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -167,7 +169,7 @@ public class LogIn extends AppCompatActivity {
                                 emailData.put("text", textContent);
                                 emailData.put("html", htmlContent);
 
-                                String apiKey = "mlsn.f7ea2d4f3405a7cc6f7b8bf6e1114b6cdd438941622a34e17b975e33c487f550";
+                                String apiKey = "mlsn.cd014e4276760b5d91490df59e48c7b9b95ad1fc9b83d23e0decf1617af800ad";
                                 String emailApiUrl = "https://api.mailersend.com/v1/email";
 
                                 JsonObjectRequest emailRequest = new JsonObjectRequest(
@@ -185,19 +187,39 @@ public class LogIn extends AppCompatActivity {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 progressBar.setVisibility(View.GONE);
-                                                try {
-                                                    boolean state=response.getBoolean("success");
-                                                    if (state){
-                                                        Toast.makeText(LogIn.this, "Password Recovery was sent to your email", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(LogIn.this, "Error occurred", Toast.LENGTH_SHORT).show();
+                                                String message = "Error occurred";
+
+                                                if (error.networkResponse != null && error.networkResponse.data != null) {
+                                                    try {
+                                                        String jsonStr = new String(error.networkResponse.data, "UTF-8");
+                                                        JSONObject json = new JSONObject(jsonStr);
+                                                        if (json.has("message")) {
+                                                            message = json.getString("message");
+                                                        }
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
                                                     }
-                                                }catch (JSONException e){
-                                                    Toast.makeText(LogIn.this, "Error occurred", Toast.LENGTH_SHORT).show();
                                                 }
+
+                                                Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
                                             }
                                         }
+
                                 ) {
+                                    @Override
+                                    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                                        try {
+                                            if (response.statusCode == 202) {
+                                                JSONObject fake = new JSONObject();
+                                                fake.put("message", "accepted");
+                                                return Response.success(fake, HttpHeaderParser.parseCacheHeaders(response));
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        return super.parseNetworkResponse(response);
+                                    }
+
                                     @Override
                                     public Map<String, String> getHeaders() {
                                         Map<String, String> headers = new HashMap<>();
@@ -206,6 +228,7 @@ public class LogIn extends AppCompatActivity {
                                         return headers;
                                     }
                                 };
+
 
                                 queue.add(emailRequest);
 
